@@ -5,6 +5,11 @@
 package lab3.ui;
 import javax.swing.JFileChooser;
 import java.io.*;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import java.lang.Object;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -130,6 +135,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         submitButton.setText("SUBMIT");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -257,13 +267,46 @@ public class MainFrame extends javax.swing.JFrame {
     private void MsgTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MsgTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MsgTextActionPerformed
-
+    String photoPath;
+    
     private void photoUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoUploadActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
+        
+        photoPath = f.getAbsolutePath();
+        
     }//GEN-LAST:event_photoUploadActionPerformed
+    
+    
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        String ageGet = ageText.getText();
+        String lnGet = lnText.getText();
+        String fnGet = fnText.getText();
+        String msgGet = MsgText.getText();
+        String infoReturn = "Customer info: "+ fnGet +" "+ lnGet+" " + ageGet + " " + msgGet;
+        String emailInput = emailText.getText();
+        ImageIcon li = new ImageIcon(photoPath);
+
+        JOptionPane.showMessageDialog(null, "your photo", "customer photo", JOptionPane.INFORMATION_MESSAGE,li);
+        
+        
+        if (ageGet.isEmpty() || lnGet.isEmpty() || fnGet.isEmpty() || emailInput.isEmpty() || msgGet.isEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "Please don't leave blank in your info, please put in all info");
+        }
+        if (!emailInput.contains("@")){
+            JOptionPane.showMessageDialog(rootPane, " Your email input format is wrong ");
+        }
+        
+        
+        try{
+            int ageCheck = Integer.parseInt(ageGet);
+            JOptionPane.showMessageDialog(rootPane, infoReturn);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, " Your age input is wrong ");
+        }
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
