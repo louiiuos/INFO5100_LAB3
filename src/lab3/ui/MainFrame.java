@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import java.lang.Object;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Image;
+import java.lang.Character;
 
 /**
  *
@@ -285,27 +287,40 @@ public class MainFrame extends javax.swing.JFrame {
         String lnGet = lnText.getText();
         String fnGet = fnText.getText();
         String msgGet = MsgText.getText();
-        String infoReturn = "Customer info: "+ fnGet +" "+ lnGet+" " + ageGet + " " + msgGet;
         String emailInput = emailText.getText();
-        ImageIcon li = new ImageIcon(photoPath);
+        
+        String firstName = "first name: " + fnGet+ "\n";
+        String lastName = "last name: " + lnGet+ "\n";
+        String age = "age: " + ageGet + "\n";
+        String email = "email: " + emailInput + "\n";
+        String msg = "message from customer: " + msgGet + "\n";
+        
+        String infoReturn = "Customer info: \n" + firstName + lastName + age + email + msg;
 
-        JOptionPane.showMessageDialog(null, "your photo", "customer photo", JOptionPane.INFORMATION_MESSAGE,li);
+        
+//        Dealing with photo 
+        ImageIcon li = new ImageIcon(photoPath);
+        Image resizeLi = li.getImage().getScaledInstance(280, 300,Image.SCALE_DEFAULT);
+        ImageIcon newLi = new ImageIcon(resizeLi);
+        JOptionPane.showMessageDialog(null, "", "customer photo", JOptionPane.INFORMATION_MESSAGE,newLi);
         
         
         if (ageGet.isEmpty() || lnGet.isEmpty() || fnGet.isEmpty() || emailInput.isEmpty() || msgGet.isEmpty()){
-            JOptionPane.showMessageDialog(rootPane, "Please don't leave blank in your info, please put in all info");
+            JOptionPane.showMessageDialog(rootPane, "Please don't leave blank in your info");
         }
         if (!emailInput.contains("@")){
             JOptionPane.showMessageDialog(rootPane, " Your email input format is wrong ");
         }
         
-        
+          
+//        exception for int 
         try{
             int ageCheck = Integer.parseInt(ageGet);
             JOptionPane.showMessageDialog(rootPane, infoReturn);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(rootPane, " Your age input is wrong ");
+            JOptionPane.showMessageDialog(rootPane, " Your age input format is wrong ");
         }
+        
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
